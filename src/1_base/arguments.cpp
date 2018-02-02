@@ -16,7 +16,7 @@
 #include "types.h"
 #include "env_assert.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -199,7 +199,7 @@ Bool_t Arguments_are_all_consumed( const Arguments* args )
 
 /*===========================================================================*/
   
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

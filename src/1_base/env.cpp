@@ -14,7 +14,7 @@
 #include "arguments.h"
 #include "env.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -86,7 +86,7 @@ Timer Env_get_synced_time( Env* env )
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

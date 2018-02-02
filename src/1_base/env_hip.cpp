@@ -17,7 +17,7 @@
 #include "arguments.h"
 #include "env_cuda.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -315,7 +315,7 @@ void Env_cuda_stream_wait( Env* env, Stream_t stream )
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 
