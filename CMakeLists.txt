@@ -12,26 +12,25 @@ SET(INCLUDE_DIRS
   )
 
 SET(SOURCES
-  src/1_base/arguments.c
-  src/1_base/env.c
-  src/1_base/env_assert.c
-  src/1_base/env_cuda.c
-  src/1_base/env_mpi.c
-  src/1_base/pointer.c
-  src/2_sweeper_base/array_operations.c
-  src/2_sweeper_base/dimensions.c
-  src/3_sweeper/faces_kba.c
-  src/3_sweeper/quantities.c
-  src/3_sweeper/stepscheduler_kba.c
-  src/3_sweeper/sweeper.c
-  src/3_sweeper/sweeper_kernels.c
-  src/4_driver/runner.c
+  src/1_base/arguments.cpp
+  src/1_base/env.cpp
+  src/1_base/env_assert.cpp
+  src/1_base/env_hip.cpp
+  src/1_base/env_mpi.cpp
+  src/1_base/pointer.cpp
+  src/2_sweeper_base/array_operations.cpp
+  src/2_sweeper_base/dimensions.cpp
+  src/3_sweeper/faces_kba.cpp
+  src/3_sweeper/quantities.cpp
+  src/3_sweeper/stepscheduler_kba.cpp
+  src/3_sweeper/sweeper.cpp
+  src/3_sweeper/sweeper_kernels.cpp
+  src/4_driver/runner.cpp
   )
 
-SET(CUDA_SOURCES)
+SET(HIP_SOURCES)
 FOREACH(FILE IN LISTS SOURCES)
-  STRING(REPLACE ".c" ".cu" FILE2 ${FILE})
-  SET(CUDA_SOURCES ${CUDA_SOURCES} ${FILE2})
+  SET(HIP_SOURCES ${HIP_SOURCES} ${FILE})
 ENDFOREACH()
 
 #set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -Werror")
@@ -41,19 +40,20 @@ IF(USE_MPI)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_MPI")
 ENDIF()
 
-IF(USE_CUDA)
-  find_package(CUDA REQUIRED)
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_CUDA")
+IF(USE_HIP)
+  find_package(HIP REQUIRED)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_HIP")
+  set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -DUSE_HIP")
   STRING(REPLACE " " ";" CMAKE_C_FLAGS_ADJUSTED ${CMAKE_C_FLAGS})
-  SET(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS};${CMAKE_C_FLAGS_ADJUSTED}")
+  SET(HIPCC_FLAGS "${HIPCC_FLAGS};${CMAKE_C_FLAGS_ADJUSTED}")
 #  STRING(REGEX MATCH " -DNM_VALUE=[0-9]*" NM_VALUE_DEF_ " ${CMAKE_C_FLAGS} ")
 #  STRING(REPLACE " " ";" NM_VALUE_DEF "${NM_VALUE_DEF_}")
 #  SET(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS}${NM_VALUE_DEF};-DUSE_CUDA")
-  CUDA_INCLUDE_DIRECTORIES(${INCLUDE_DIRS})
-  CUDA_ADD_LIBRARY(sweeper STATIC ${CUDA_SOURCES})
-  CUDA_ADD_EXECUTABLE(sweep src/4_driver/sweep.cu)
+  INCLUDE_DIRECTORIES(${INCLUDE_DIRS})
+  ADD_LIBRARY(sweeper STATIC ${HIP_SOURCES})
+  ADD_EXECUTABLE(sweep src/4_driver/sweep.cpp)
   TARGET_LINK_LIBRARIES(sweep sweeper)
-  CUDA_ADD_EXECUTABLE(tester src/4_driver/tester.cu)
+  ADD_EXECUTABLE(tester src/4_driver/tester.cpp)
   TARGET_LINK_LIBRARIES(tester sweeper)
 ELSE()
   INCLUDE_DIRECTORIES(${INCLUDE_DIRS})
