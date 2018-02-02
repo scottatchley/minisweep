@@ -97,7 +97,7 @@ TARGET_HD static inline void Sweeper_sweep_cell(
         __assume_aligned( vilocal, ( VEC_LEN < NTHREAD_M*NTHREAD_U ?
                                      VEC_LEN : NTHREAD_M*NTHREAD_U )
                                                                  * sizeof(P) );
-#ifndef __CUDA_ARCH__
+#ifndef __HIP_PLATFORM_HCC__
         int sweeper_thread_m = 0;
         int sweeper_thread_u = 0;
         for( sweeper_thread_u=0; sweeper_thread_u<NTHREAD_U;
@@ -168,7 +168,7 @@ TODO: fix vectorization for this loop.
         __assume_aligned( vilocal,  ( VEC_LEN < NTHREAD_M*NTHREAD_U ?
                                       VEC_LEN : NTHREAD_M*NTHREAD_U )
                                                                  * sizeof(P) );
-#ifndef __CUDA_ARCH__
+#ifndef __HIP_PLATFORM_HCC__
         int sweeper_thread_a = 0;
 #pragma ivdep
 #pragma simd assert, vectorlengthfor( P )
@@ -258,7 +258,7 @@ TODO: fix vectorization for this loop.
     __assume_aligned( facexy,  VEC_LEN * sizeof(P) );
     __assume_aligned( facexz,  VEC_LEN * sizeof(P) );
     __assume_aligned( faceyz,  VEC_LEN * sizeof(P) );
-#ifndef __CUDA_ARCH__
+#ifndef __HIP_PLATFORM_HCC__
     int sweeper_thread_a = 0;
 #pragma ivdep
 #pragma simd assert, vectorlengthfor( P )
@@ -300,7 +300,7 @@ TODO: fix vectorization for this loop.
         __assume_aligned( vilocal,  ( VEC_LEN < NTHREAD_M*NTHREAD_U ?
                                       VEC_LEN : NTHREAD_M*NTHREAD_U )
                                                                  * sizeof(P) );
-#ifndef __CUDA_ARCH__
+#ifndef __HIP_PLATFORM_HCC__
         int sweeper_thread_u = 0;
         int sweeper_thread_m = 0;
         for( sweeper_thread_u=0; sweeper_thread_u<NTHREAD_U;

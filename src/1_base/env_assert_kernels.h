@@ -11,7 +11,7 @@
 #ifndef _env_assert_kernels_h_
 #define _env_assert_kernels_h_
 
-#ifndef __CUDA_ARCH__
+#ifndef __HIP_DEVICE_COMPILE__
 /*---Do the following on the HDST---*/
 
 #ifdef __cplusplus
@@ -39,7 +39,7 @@ void insist_( const char *condition_string, const char *file, int line );
 } /*---extern "C"---*/
 #endif
 
-#else /*---__CUDA_ARCH__---*/
+#else /*---__HIP_DEVICE_COMPILE__---*/
 /*---Do the following on the DEVICE---*/
 
 /*---Ignore on device.---*/
@@ -47,7 +47,7 @@ void insist_( const char *condition_string, const char *file, int line );
 #define Assert(v)
 #define Insist(v)
 
-#endif /*---__CUDA_ARCH__---*/
+#endif /*---__HIP_DEVICE_COMPILE__---*/
 
 /*===========================================================================*/
 /*---Static assertions---*/

@@ -10,7 +10,7 @@
 
 #include "env_assert.h"
 
-#ifndef __CUDA_ARCH__
+#ifndef __HIP_PLATFORM_HCC__
 /*---Do the following on the HDST---*/
 
 #include <stdlib.h>
@@ -37,6 +37,6 @@ void insist_( const char *condition_string, const char *file, int line )
 } /*---extern "C"---*/
 #endif
 
-#endif /*---__CUDA_ARCH__---*/
+#endif /*---__HIP_PLATFORM_HCC__---*/
 
 /*---------------------------------------------------------------------------*/

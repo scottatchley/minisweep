@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 /*---------------------------------------------------------------------------*/
 /*!
  * \file   types_kernels.h
@@ -19,7 +20,7 @@ extern "C"
 /*===========================================================================*/
 /*---Function attributes---*/
 
-#ifdef USE_CUDA
+#ifdef USE_HIP
 
 #define TARGET_G  __global__
 #define TARGET_HD __host__ __device__

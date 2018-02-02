@@ -22,7 +22,7 @@ since these are tightly coupled to the data structure.
 #include "mpi.h"
 #endif
 
-#ifdef USE_CUDA
+#ifdef USE_HIP
 #include "cuda.h"
 #endif
 
@@ -42,8 +42,8 @@ typedef int Comm_t;
 typedef int Request_t;
 #endif
 
-#ifdef USE_CUDA
-typedef cudaStream_t Stream_t;
+#ifdef USE_HIP
+typedef hipStream_t Stream_t;
 #else
 typedef int Stream_t;
 #endif
@@ -60,7 +60,7 @@ typedef struct
   Comm_t active_comm_;
   Bool_t is_proc_active_;
 #endif
-#ifdef USE_CUDA
+#ifdef USE_HIP
   Bool_t   is_using_device_;
   Stream_t stream_send_block_;
   Stream_t stream_recv_block_;

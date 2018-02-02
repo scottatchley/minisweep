@@ -14,8 +14,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-#ifdef USE_CUDA
+#ifdef USE_HIP
 #include "cuda.h"
+#include "hip/hip_runtime.h"
 #endif
 
 #include "types.h"

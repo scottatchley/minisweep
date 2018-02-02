@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 /*---------------------------------------------------------------------------*/
 /*!
  * \file   env_cuda_kernels.h
@@ -11,7 +12,7 @@
 #ifndef _env_cuda_kernels_h_
 #define _env_cuda_kernels_h_
 
-#ifdef USE_CUDA
+#ifdef USE_HIP
 #include "cuda.h"
 #endif
 
@@ -33,13 +34,14 @@ enum{ VEC_LEN = 32 };
 /*===========================================================================*/
 /*---Pointer to device shared memory---*/
 
-#ifdef __CUDA_ARCH__
-__shared__ extern char cuda_shared_memory[];
+#ifdef __HIP_DEVICE_COMPILE__
+//__shared__ extern char cuda_shared_memory[];
+HIP_DYNAMIC_SHARED(char, cuda_shared_memory);
 #endif
 
 TARGET_HD static char* Env_cuda_shared_memory()
 {
-#ifdef __CUDA_ARCH__
+#ifdef __HIP_DEVICE_COMPILE__
   return cuda_shared_memory;
 #else
   return (char*)0;
@@ -53,10 +55,10 @@ TARGET_HD static int Env_cuda_threadblock( int axis )
 {
   Assert( axis >= 0 && axis < 3 );
 
-#ifdef __CUDA_ARCH__
-  return axis==0 ? blockIdx.x :
-         axis==1 ? blockIdx.y :
-                   blockIdx.z;
+#ifdef __HIP_DEVICE_COMPILE__
+  return axis==0 ? hipBlockIdx_x :
+         axis==1 ? hipBlockIdx_y :
+                   hipBlockIdx_z;
 #else
   return 0;
 #endif
@@ -68,10 +70,10 @@ TARGET_HD static int Env_cuda_thread_in_threadblock( int axis )
 {
   Assert( axis >= 0 && axis < 3 );
 
-#ifdef __CUDA_ARCH__
-  return axis==0 ? threadIdx.x :
-         axis==1 ? threadIdx.y :
-                   threadIdx.z;
+#ifdef __HIP_DEVICE_COMPILE__
+  return axis==0 ? hipThreadIdx_x :
+         axis==1 ? hipThreadIdx_y :
+                   hipThreadIdx_z;
 #else
   return 0;
 #endif
@@ -81,7 +83,7 @@ TARGET_HD static int Env_cuda_thread_in_threadblock( int axis )
 
 TARGET_HD static void Env_cuda_sync_threadblock()
 {
-#ifdef __CUDA_ARCH__
+#ifdef __HIP_DEVICE_COMPILE__
   __syncthreads();
 /*
   __threadfence_block();
