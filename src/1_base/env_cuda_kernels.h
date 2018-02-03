@@ -39,7 +39,7 @@ enum{ VEC_LEN = 32 };
 HIP_DYNAMIC_SHARED(char, cuda_shared_memory);
 #endif
 
-TARGET_HD static char* Env_cuda_shared_memory()
+TARGET_HD static char* Env_hip_shared_memory()
 {
 #ifdef __HIP_DEVICE_COMPILE__
   return cuda_shared_memory;
@@ -51,7 +51,7 @@ TARGET_HD static char* Env_cuda_shared_memory()
 /*===========================================================================*/
 /*---Device thread management---*/
 
-TARGET_HD static int Env_cuda_threadblock( int axis )
+TARGET_HD static int Env_hip_threadblock( int axis )
 {
   Assert( axis >= 0 && axis < 3 );
 
@@ -66,7 +66,7 @@ TARGET_HD static int Env_cuda_threadblock( int axis )
 
 /*---------------------------------------------------------------------------*/
 
-TARGET_HD static int Env_cuda_thread_in_threadblock( int axis )
+TARGET_HD static int Env_hip_thread_in_threadblock( int axis )
 {
   Assert( axis >= 0 && axis < 3 );
 
@@ -81,7 +81,7 @@ TARGET_HD static int Env_cuda_thread_in_threadblock( int axis )
 
 /*---------------------------------------------------------------------------*/
 
-TARGET_HD static void Env_cuda_sync_threadblock()
+TARGET_HD static void Env_hip_sync_threadblock()
 {
 #ifdef __HIP_DEVICE_COMPILE__
   __syncthreads();

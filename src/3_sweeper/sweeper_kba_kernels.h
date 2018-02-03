@@ -115,7 +115,7 @@ TARGET_HD static inline int Sweeper_thread_e( const SweeperLite* sweeper )
   return sweeper->thread_e;
 #else
 #ifdef __HIP_PLATFORM_HCC__
-  return Env_cuda_threadblock( 0 );
+  return Env_hip_threadblock( 0 );
 #else
   Assert( sweeper->nthread_e *
           sweeper->nthread_octant *
@@ -135,7 +135,7 @@ TARGET_HD static inline int Sweeper_thread_octant( const SweeperLite* sweeper )
   return sweeper->thread_octant;
 #else
 #ifdef __HIP_PLATFORM_HCC__
-  return Env_cuda_thread_in_threadblock( 1 );
+  return Env_hip_thread_in_threadblock( 1 );
 #else
   Assert( sweeper->nthread_e *
           sweeper->nthread_octant *
@@ -168,7 +168,7 @@ TARGET_HD static inline int Sweeper_thread_y( const SweeperLite* sweeper )
   return sweeper->thread_y;
 #else
 #ifdef __HIP_PLATFORM_HCC__
-  return Env_cuda_thread_in_threadblock( 2 ) % sweeper->nthread_y ;
+  return Env_hip_thread_in_threadblock( 2 ) % sweeper->nthread_y ;
 #else
   Assert( sweeper->nthread_e *
           sweeper->nthread_octant *
@@ -190,7 +190,7 @@ TARGET_HD static inline int Sweeper_thread_z( const SweeperLite* sweeper )
   return sweeper->thread_z;
 #else
 #ifdef __HIP_PLATFORM_HCC__
-  return Env_cuda_thread_in_threadblock( 2 ) / sweeper->nthread_y;
+  return Env_hip_thread_in_threadblock( 2 ) / sweeper->nthread_y;
 #else
   Assert( sweeper->nthread_e *
           sweeper->nthread_octant *
@@ -209,7 +209,7 @@ TARGET_HD static inline int Sweeper_thread_z( const SweeperLite* sweeper )
 TARGET_HD static inline int Sweeper_thread_a( const SweeperLite* sweeper )
 {
 #ifdef __HIP_PLATFORM_HCC__
-  return Env_cuda_thread_in_threadblock( 0 );
+  return Env_hip_thread_in_threadblock( 0 );
 #else
   return 0;
 #endif
@@ -220,7 +220,7 @@ TARGET_HD static inline int Sweeper_thread_a( const SweeperLite* sweeper )
 TARGET_HD static inline int Sweeper_thread_m( const SweeperLite* sweeper )
 {
 #ifdef __HIP_PLATFORM_HCC__
-  return Env_cuda_thread_in_threadblock( 0 ) / NTHREAD_U;
+  return Env_hip_thread_in_threadblock( 0 ) / NTHREAD_U;
 #else
   return 0;
 #endif
@@ -231,7 +231,7 @@ TARGET_HD static inline int Sweeper_thread_m( const SweeperLite* sweeper )
 TARGET_HD static inline int Sweeper_thread_u( const SweeperLite* sweeper )
 {
 #ifdef __HIP_PLATFORM_HCC__
-  return Env_cuda_thread_in_threadblock( 0 ) % NTHREAD_U;
+  return Env_hip_thread_in_threadblock( 0 ) % NTHREAD_U;
 #else
   return 0;
 #endif
@@ -244,7 +244,7 @@ TARGET_HD static inline void Sweeper_sync_octant_threads( SweeperLite* sweeper )
 {
 #ifdef __HIP_PLATFORM_HCC__
   /*---NOTE: this may not be needed if these threads are mapped in-warp---*/
-  Env_cuda_sync_threadblock();
+  Env_hip_sync_threadblock();
 #else
 #ifdef USE_OPENMP_THREADS
 if( sweeper->nthread_octant != 1 )
@@ -261,7 +261,7 @@ TARGET_HD static inline void Sweeper_sync_yz_threads( SweeperLite* sweeper )
 {
 #ifdef __HIP_PLATFORM_HCC__
   /*---NOTE: this may not be needed if these threads are mapped in-warp---*/
-  Env_cuda_sync_threadblock();
+  Env_hip_sync_threadblock();
 #else
 #ifdef USE_OPENMP_THREADS
 if( sweeper->nthread_y != 1 || sweeper->nthread_z != 1 )
@@ -278,7 +278,7 @@ TARGET_HD static inline void Sweeper_sync_amu_threads( SweeperLite* sweeper )
 {
 #ifdef __HIP_PLATFORM_HCC__
   /*---NOTE: this may not be needed if these threads are mapped in-warp---*/
-  Env_cuda_sync_threadblock();
+  Env_hip_sync_threadblock();
 #else
 #ifdef USE_OPENMP_THREADS
 /*---amu axes not threaded for openmp case---*/
@@ -293,7 +293,7 @@ TARGET_HD static inline P* __restrict__ Sweeper_vilocal_this_(
                                                          SweeperLite* sweeper )
 {
 #ifdef __HIP_PLATFORM_HCC__
-  return ( (P*) Env_cuda_shared_memory() )
+  return ( (P*) Env_hip_shared_memory() )
     + ( NTHREAD_M *
         NU *
         sweeper->nthread_octant *
@@ -328,7 +328,7 @@ TARGET_HD static inline P* __restrict__ Sweeper_vslocal_this_(
                                                          SweeperLite* sweeper )
 {
 #ifdef __HIP_PLATFORM_HCC__
-  return ( (P*) Env_cuda_shared_memory() )
+  return ( (P*) Env_hip_shared_memory() )
     + ( NTHREAD_M *
         NU *
         sweeper->nthread_octant *
@@ -363,7 +363,7 @@ TARGET_HD static inline P* __restrict__ Sweeper_volocal_this_(
                                                          SweeperLite* sweeper )
 {
 #ifdef __HIP_PLATFORM_HCC__
-  return ( (P*) Env_cuda_shared_memory() )
+  return ( (P*) Env_hip_shared_memory() )
     + ( NTHREAD_M *
         NU *
         sweeper->nthread_octant *

@@ -51,9 +51,9 @@ void Quantities_init_am_matrices_( Quantities*       quan,
   /*---Allocate arrays---*/
 
   Pointer_create( & quan->a_from_m, dims.nm * dims.na * NOCTANT,
-                                             Env_cuda_is_using_device( env ) );
+                                             Env_hip_is_using_device( env ) );
   Pointer_create( & quan->m_from_a, dims.nm * dims.na * NOCTANT,
-                                             Env_cuda_is_using_device( env ) );
+                                             Env_hip_is_using_device( env ) );
 
   Pointer_allocate( & quan->a_from_m );
   Pointer_allocate( & quan->m_from_a );

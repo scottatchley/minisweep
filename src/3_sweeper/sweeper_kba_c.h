@@ -85,9 +85,15 @@ void Sweeper_create( Sweeper*          sweeper,
           && ((sweeper->nthread_octant&(sweeper->nthread_octant-1))==0)
                                        ? "Invalid thread count supplied" : 0 );
   /*---Don't allow threading in cases where it doesn't make sense---*/
+  fprintf(stderr, "%s: sweeper->nthread_octant=%d Env_hip_is_using_device(env)=%d Env_hip_is_using_device(env)=%d OMP_THREADS=%d OMP_TASKS=%d\n",
+                  __func__,
+                  sweeper->nthread_octant, Env_hip_is_using_device ( env ),
+                  Env_hip_is_using_device(env),
+                  IS_USING_OPENMP_THREADS, IS_USING_OPENMP_TASKS);
   Insist( sweeper->nthread_octant==1 || IS_USING_OPENMP_THREADS
                                      || IS_USING_OPENMP_TASKS
-                                     || Env_cuda_is_using_device( env ) ?
+                                     || Env_hip_is_using_device( env ) 
+                                     || Env_hip_is_using_device ( env ) ?
           "Threading not allowed for this case" : 0 );
 
   sweeper->noctant_per_block = sweeper->nthread_octant;
@@ -170,7 +176,8 @@ void Sweeper_create( Sweeper*          sweeper,
   /*---Don't allow threading in cases where it doesn't make sense---*/
   Insist( sweeper->nthread_e==1 || IS_USING_OPENMP_THREADS
                                 || IS_USING_OPENMP_TASKS
-                                || Env_cuda_is_using_device( env ) ?
+                                || Env_hip_is_using_device( env )
+                                || Env_hip_is_using_device( env ) ?
           "Threading not allowed for this case" : 0 );
 
   /*====================*/
@@ -214,7 +221,8 @@ void Sweeper_create( Sweeper*          sweeper,
     /*---Don't allow threading in cases where it doesn't make sense---*/
     Insist( sweeper->nthread_y==1 || IS_USING_OPENMP_THREADS
                                   || IS_USING_OPENMP_TASKS
-                                  || Env_cuda_is_using_device( env ) ?
+                                  || Env_hip_is_using_device( env )
+                                  || Env_hip_is_using_device( env ) ?
             "Threading not allowed for this case" : 0 );
     Insist( sweeper->nthread_y==1 || ! IS_USING_OPENMP_TASKS ?
             "Spatial threading must be defined via subblock sizes." : 0 );
@@ -226,7 +234,8 @@ void Sweeper_create( Sweeper*          sweeper,
     /*---Don't allow threading in cases where it doesn't make sense---*/
     Insist( sweeper->nthread_z==1 || IS_USING_OPENMP_THREADS
                                   || IS_USING_OPENMP_TASKS
-                                  || Env_cuda_is_using_device( env ) ?
+                                  || Env_hip_is_using_device( env )
+                                  || Env_hip_is_using_device( env ) ?
             "Threading not allowed for this case" : 0 );
     Insist( sweeper->nthread_z==1 || ! IS_USING_OPENMP_TASKS ?
             "Spatial threading must be defined via subblock sizes." : 0 );
@@ -266,15 +275,15 @@ void Sweeper_create( Sweeper*          sweeper,
   /*---Allocate arrays---*/
   /*====================*/
 
-  sweeper->vilocal_host_ = Env_cuda_is_using_device( env ) ?
+  sweeper->vilocal_host_ = Env_hip_is_using_device( env ) ?
                            ( (P*) NULL ) :
                            malloc_host_P( Sweeper_nvilocal_( sweeper, env ) );
 
-  sweeper->vslocal_host_ = Env_cuda_is_using_device( env ) ?
+  sweeper->vslocal_host_ = Env_hip_is_using_device( env ) ?
                            ( (P*) NULL ) :
                            malloc_host_P( Sweeper_nvslocal_( sweeper, env ) );
 
-  sweeper->volocal_host_ = Env_cuda_is_using_device( env ) ?
+  sweeper->volocal_host_ = Env_hip_is_using_device( env ) ?
                            ( (P*) NULL ) :
                            malloc_host_P( Sweeper_nvolocal_( sweeper, env ) );
 
@@ -296,7 +305,7 @@ void Sweeper_destroy( Sweeper* sweeper,
   /*---Deallocate arrays---*/
   /*====================*/
 
-  if( ! Env_cuda_is_using_device( env ) )
+  if( ! Env_hip_is_using_device( env ) )
   {
     if( sweeper->vilocal_host_ )
     {
@@ -400,7 +409,7 @@ static void Sweeper_sweep_block_adapter(
 
   /*---Call sweep block implementation function---*/
 
-  if( Env_cuda_is_using_device( env ) )
+  if( Env_hip_is_using_device( env ) )
   {
     Sweeper_sweep_block_impl_global
 #ifdef USE_CUDA
@@ -430,7 +439,7 @@ static void Sweeper_sweep_block_adapter(
                               proc_y_max,
                               stepinfoall,
                               do_block_init );
-    Assert( Env_cuda_last_call_succeeded() );
+    Assert( Env_hip_last_call_succeeded() );
   }
   else
   {
@@ -617,7 +626,7 @@ void Sweeper_sweep(
 
 #ifdef USE_OPENMP_VO_ATOMIC
   initialize_state_zero( Pointer_h( vo ), sweeper->dims, NU );
-  Pointer_update_d_stream( vo, Env_cuda_stream_kernel_faces( env ) );
+  Pointer_update_d_stream( vo, Env_hip_stream_kernel_faces( env ) );
 #endif
 
   /*--------------------*/
@@ -681,12 +690,12 @@ void Sweeper_sweep(
     {
       if( step == 0 )
       {
-        Pointer_update_d_stream( facexy, Env_cuda_stream_kernel_faces( env ) );
+        Pointer_update_d_stream( facexy, Env_hip_stream_kernel_faces( env ) );
       }
-      Pointer_update_d_stream(   facexz, Env_cuda_stream_kernel_faces( env ) );
-      Pointer_update_d_stream(   faceyz, Env_cuda_stream_kernel_faces( env ) );
+      Pointer_update_d_stream(   facexz, Env_hip_stream_kernel_faces( env ) );
+      Pointer_update_d_stream(   faceyz, Env_hip_stream_kernel_faces( env ) );
     }
-    Env_cuda_stream_wait( env, Env_cuda_stream_kernel_faces( env ) );
+    Env_hip_stream_wait( env, Env_hip_stream_kernel_faces( env ) );
 
     /*====================*/
     /*---Recv face via MPI START (i+1)---*/
@@ -730,7 +739,7 @@ void Sweeper_sweep(
       {
         Pointer_create_alias(    &vi_b, vi, size_state_block * block_to_send[i],
                                             size_state_block );
-        Pointer_update_d_stream( &vi_b, Env_cuda_stream_send_block( env ) );
+        Pointer_update_d_stream( &vi_b, Env_hip_stream_send_block( env ) );
         Pointer_destroy(         &vi_b );
 
         /*---Initialize result array to zero if needed---*/
@@ -739,7 +748,7 @@ void Sweeper_sweep(
         Pointer_create_alias(    &vo_b, vi, size_state_block * block_to_send[i],
                                           size_state_block );
         initialize_state_zero( Pointer_h( &vo_b ), sweeper->dims, NU );
-        Pointer_update_d_stream( &vo_b, Env_cuda_stream_send_block( env ) );
+        Pointer_update_d_stream( &vo_b, Env_hip_stream_send_block( env ) );
         Pointer_destroy(         &vo_b );
 #endif
       }
@@ -765,7 +774,7 @@ void Sweeper_sweep(
       {
         Pointer_create_alias(    &vo_b, vo, size_state_block * block_to_recv[i],
                                             size_state_block );
-        Pointer_update_h_stream( &vo_b, Env_cuda_stream_recv_block( env ) );
+        Pointer_update_h_stream( &vo_b, Env_hip_stream_recv_block( env ) );
         Pointer_destroy(         &vo_b );
       }
     }
@@ -775,8 +784,8 @@ void Sweeper_sweep(
     /*---Recv block from device WAIT (i-1)---*/
     /*====================*/
 
-    Env_cuda_stream_wait( env, Env_cuda_stream_send_block( env ) );
-    Env_cuda_stream_wait( env, Env_cuda_stream_recv_block( env ) );
+    Env_hip_stream_wait( env, Env_hip_stream_send_block( env ) );
+    Env_hip_stream_wait( env, Env_hip_stream_recv_block( env ) );
 
     /*====================*/
     /*---Send face via MPI WAIT (i-1)---*/
@@ -792,7 +801,7 @@ void Sweeper_sweep(
     /*---Perform the sweep on the block WAIT (i)---*/
     /*====================*/
 
-    Env_cuda_stream_wait( env, Env_cuda_stream_kernel_faces( env ) );
+    Env_hip_stream_wait( env, Env_hip_stream_kernel_faces( env ) );
 
     /*====================*/
     /*---Recv face from device START (i)---*/
@@ -803,12 +812,12 @@ void Sweeper_sweep(
     {
       if( step == nstep-1 )
       {
-        Pointer_update_h_stream( facexy, Env_cuda_stream_kernel_faces( env ) );
+        Pointer_update_h_stream( facexy, Env_hip_stream_kernel_faces( env ) );
       }
-      Pointer_update_h_stream(   facexz, Env_cuda_stream_kernel_faces( env ) );
-      Pointer_update_h_stream(   faceyz, Env_cuda_stream_kernel_faces( env ) );
+      Pointer_update_h_stream(   facexz, Env_hip_stream_kernel_faces( env ) );
+      Pointer_update_h_stream(   faceyz, Env_hip_stream_kernel_faces( env ) );
     }
-    Env_cuda_stream_wait( env, Env_cuda_stream_kernel_faces( env ) );
+    Env_hip_stream_wait( env, Env_hip_stream_kernel_faces( env ) );
 
     /*====================*/
     /*---Send face via MPI START (i)---*/

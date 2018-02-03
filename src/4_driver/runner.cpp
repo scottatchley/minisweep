@@ -112,12 +112,12 @@ void Runner_run_case( Runner* runner, Arguments* args, Env* env )
   /*---Allocate arrays---*/
 
   Pointer_create( &vi, Dimensions_size_state( dims, NU ),
-                                            Env_cuda_is_using_device( env ) );
+                                            Env_hip_is_using_device( env ) );
   Pointer_set_pinned( &vi, Bool_true );
   Pointer_allocate( &vi );
 
   Pointer_create( &vo, Dimensions_size_state( dims, NU ),
-                                            Env_cuda_is_using_device( env ) );
+                                            Env_hip_is_using_device( env ) );
   Pointer_set_pinned( &vo, Bool_true );
   Pointer_allocate( &vo );
 

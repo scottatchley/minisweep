@@ -37,7 +37,7 @@ void Faces_create( Faces*      faces,
 
   Pointer_create(       Faces_facexy( faces, 0 ),
     Dimensions_size_facexy( dims_b, NU, noctant_per_block ),
-    Env_cuda_is_using_device( env ) );
+    Env_hip_is_using_device( env ) );
   Pointer_set_pinned( Faces_facexy( faces, 0 ), Bool_true );
   Pointer_allocate(     Faces_facexy( faces, 0 ) );
 
@@ -45,12 +45,12 @@ void Faces_create( Faces*      faces,
   {
     Pointer_create(       Faces_facexz( faces, i ),
       Dimensions_size_facexz( dims_b, NU, noctant_per_block ),
-      Env_cuda_is_using_device( env ) );
+      Env_hip_is_using_device( env ) );
     Pointer_set_pinned( Faces_facexz( faces, i ), Bool_true );
 
     Pointer_create(       Faces_faceyz( faces, i ),
       Dimensions_size_faceyz( dims_b, NU, noctant_per_block ),
-      Env_cuda_is_using_device( env ) );
+      Env_hip_is_using_device( env ) );
     Pointer_set_pinned( Faces_faceyz( faces, i ), Bool_true );
   }
 

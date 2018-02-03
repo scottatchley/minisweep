@@ -35,7 +35,7 @@ Env Env_null(void)
 void Env_initialize( Env *env, int argc, char** argv )
 {
   Env_mpi_initialize_(  env, argc, argv );
-  Env_cuda_initialize_( env, argc, argv );
+  Env_hip_initialize_( env, argc, argv );
 }
 
 /*===========================================================================*/
@@ -44,7 +44,7 @@ void Env_initialize( Env *env, int argc, char** argv )
 void Env_set_values( Env *env, Arguments* args )
 {
   Env_mpi_set_values_(  env, args );
-  Env_cuda_set_values_( env, args );
+  Env_hip_set_values_( env, args );
 }
 
 /*===========================================================================*/
@@ -52,7 +52,7 @@ void Env_set_values( Env *env, Arguments* args )
 
 void Env_finalize( Env* env )
 {
-  Env_cuda_finalize_( env );
+  Env_hip_finalize_( env );
   Env_mpi_finalize_(  env );
 }
 

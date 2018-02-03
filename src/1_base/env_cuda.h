@@ -30,27 +30,27 @@ extern "C"
 /*===========================================================================*/
 /*---Error handling---*/
 
-Bool_t Env_cuda_last_call_succeeded(void);
+Bool_t Env_hip_last_call_succeeded(void);
 
 /*===========================================================================*/
 /*---Initialize CUDA---*/
 
-void Env_cuda_initialize_( Env *env, int argc, char** argv );
+void Env_hip_initialize_( Env *env, int argc, char** argv );
 
 /*===========================================================================*/
 /*---Finalize CUDA---*/
 
-void Env_cuda_finalize_( Env* env );
+void Env_hip_finalize_( Env* env );
 
 /*===========================================================================*/
 /*---Set values from args---*/
 
-void Env_cuda_set_values_( Env *env, Arguments* args );
+void Env_hip_set_values_( Env *env, Arguments* args );
 
 /*===========================================================================*/
 /*---Determine whether using device---*/
 
-Bool_t Env_cuda_is_using_device( const Env* const env );
+Bool_t Env_hip_is_using_device( const Env* const env );
 
 /*===========================================================================*/
 /*---Memory management, for CUDA and all platforms ex. MIC---*/
@@ -118,19 +118,19 @@ void cuda_copy_device_to_host_stream_P( P*       p_h,
 /*===========================================================================*/
 /*---Stream management---*/
 
-Stream_t Env_cuda_stream_send_block( Env* env );
+Stream_t Env_hip_stream_send_block( Env* env );
 
 /*---------------------------------------------------------------------------*/
 
-Stream_t Env_cuda_stream_recv_block( Env* env );
+Stream_t Env_hip_stream_recv_block( Env* env );
 
 /*---------------------------------------------------------------------------*/
 
-Stream_t Env_cuda_stream_kernel_faces( Env* env );
+Stream_t Env_hip_stream_kernel_faces( Env* env );
 
 /*---------------------------------------------------------------------------*/
 
-void Env_cuda_stream_wait( Env* env, Stream_t stream );
+void Env_hip_stream_wait( Env* env, Stream_t stream );
 
 /*===========================================================================*/
 

@@ -26,7 +26,7 @@ extern "C"
 /*===========================================================================*/
 /*---Error handling---*/
 
-Bool_t Env_cuda_last_call_succeeded()
+Bool_t Env_hip_last_call_succeeded()
 {
   Bool_t result = Bool_true;
 
@@ -47,41 +47,41 @@ Bool_t Env_cuda_last_call_succeeded()
 /*===========================================================================*/
 /*---Initialize CUDA---*/
 
-void Env_cuda_initialize_( Env *env, int argc, char** argv )
+void Env_hip_initialize_( Env *env, int argc, char** argv )
 {
 #ifdef USE_HIP
   hipStreamCreate( & env->stream_send_block_ );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 
   hipStreamCreate( & env->stream_recv_block_ );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 
   hipStreamCreate( & env->stream_kernel_faces_ );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 #endif
 }
 
 /*===========================================================================*/
 /*---Finalize CUDA---*/
 
-void Env_cuda_finalize_( Env* env )
+void Env_hip_finalize_( Env* env )
 {
 #ifdef USE_HIP
   hipStreamDestroy( env->stream_send_block_ );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 
   hipStreamDestroy( env->stream_recv_block_ );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 
   hipStreamDestroy( env->stream_kernel_faces_ );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 #endif
 }
 
 /*===========================================================================*/
 /*---Set values from args---*/
 
-void Env_cuda_set_values_( Env *env, Arguments* args )
+void Env_hip_set_values_( Env *env, Arguments* args )
 {
 #ifdef USE_HIP
   env->is_using_device_ = Arguments_consume_int_or_default( args,
@@ -94,7 +94,7 @@ void Env_cuda_set_values_( Env *env, Arguments* args )
 /*===========================================================================*/
 /*---Determine whether using device---*/
 
-Bool_t Env_cuda_is_using_device( const Env* const env )
+Bool_t Env_hip_is_using_device( const Env* const env )
 {
 #ifdef USE_HIP
   return env->is_using_device_;
@@ -136,7 +136,7 @@ P* malloc_host_pinned_P( size_t n )
 
 #ifdef USE_HIP
   hipHostMalloc( &result, n==0 ? ((size_t)1) : n*sizeof(P) );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 #else
   result = (P*)malloc( n * sizeof(P) );
 #endif
@@ -155,7 +155,7 @@ P* malloc_device_P( size_t n )
 
 #ifdef USE_HIP
   hipMalloc( &result, n==0 ? ((size_t)1) : n*sizeof(P) );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
   Assert( result );
 #endif
 
@@ -185,7 +185,7 @@ void free_host_pinned_P( P* p )
   Assert( p );
 #ifdef USE_HIP
   hipHostFree( p );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 #else
   free( (void*) p );
 #endif
@@ -197,7 +197,7 @@ void free_device_P( P* p )
 {
 #ifdef USE_HIP
   hipFree( p );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 #endif
 }
 
@@ -215,7 +215,7 @@ void cuda_copy_host_to_device_P( P*     p_d,
   Assert( n+1 >= 1 );
 
   hipMemcpy( p_d, p_h, n*sizeof(P), hipMemcpyHostToDevice );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 #endif
 }
 
@@ -231,7 +231,7 @@ void cuda_copy_device_to_host_P( P*     p_h,
   Assert( n+1 >= 1 );
 
   hipMemcpy( p_h, p_d, n*sizeof(P), hipMemcpyDeviceToHost );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 #endif
 }
 
@@ -248,7 +248,7 @@ void cuda_copy_host_to_device_stream_P( P*       p_d,
   Assert( n+1 >= 1 );
 
   hipMemcpyAsync( p_d, p_h, n*sizeof(P), hipMemcpyHostToDevice, stream );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 #endif
 }
 
@@ -265,14 +265,14 @@ void cuda_copy_device_to_host_stream_P( P*       p_h,
   Assert( n+1 >= 1 );
 
   hipMemcpyAsync( p_h, p_d, n*sizeof(P), hipMemcpyDeviceToHost, stream );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 #endif
 }
 
 /*===========================================================================*/
 /*---Stream management---*/
 
-Stream_t Env_cuda_stream_send_block( Env* env )
+Stream_t Env_hip_stream_send_block( Env* env )
 {
 #ifdef USE_HIP
   return env->stream_send_block_;
@@ -283,7 +283,7 @@ Stream_t Env_cuda_stream_send_block( Env* env )
 
 /*---------------------------------------------------------------------------*/
 
-Stream_t Env_cuda_stream_recv_block( Env* env )
+Stream_t Env_hip_stream_recv_block( Env* env )
 {
 #ifdef USE_HIP
   return env->stream_recv_block_;
@@ -294,7 +294,7 @@ Stream_t Env_cuda_stream_recv_block( Env* env )
 
 /*---------------------------------------------------------------------------*/
 
-Stream_t Env_cuda_stream_kernel_faces( Env* env )
+Stream_t Env_hip_stream_kernel_faces( Env* env )
 {
 #ifdef USE_HIP
   return env->stream_kernel_faces_;
@@ -305,11 +305,11 @@ Stream_t Env_cuda_stream_kernel_faces( Env* env )
 
 /*---------------------------------------------------------------------------*/
 
-void Env_cuda_stream_wait( Env* env, Stream_t stream )
+void Env_hip_stream_wait( Env* env, Stream_t stream )
 {
 #ifdef USE_HIP
   hipStreamSynchronize( stream );
-  Assert( Env_cuda_last_call_succeeded() );
+  Assert( Env_hip_last_call_succeeded() );
 #endif
 }
 
