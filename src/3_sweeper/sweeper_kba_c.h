@@ -415,20 +415,28 @@ static void Sweeper_sweep_block_adapter(
   {
 #ifdef USE_HIP
     hipLaunchKernelGGL(
-                     Sweeper_sweep_block_impl_global,
-                     dim3( Sweeper_nthreadblock( sweeper, 0, env ),
-                           Sweeper_nthreadblock( sweeper, 1, env ),
-                           Sweeper_nthreadblock( sweeper, 2, env ) ),
-                     dim3( Sweeper_nthread_in_threadblock( sweeper, 0, env ),
-                           Sweeper_nthread_in_threadblock( sweeper, 1, env ),
-                           Sweeper_nthread_in_threadblock( sweeper, 2, env ) ),
-                     Sweeper_shared_size_( sweeper, env ),
-                     Env_hip_stream_kernel_faces( env ),
+                     (Sweeper_sweep_block_impl_global),
+                      dim3(dim3( Sweeper_nthreadblock( sweeper, 0, env ), Sweeper_nthreadblock( sweeper, 1, env ), Sweeper_nthreadblock( sweeper, 2, env ) ), dim3( Sweeper_nthread_in_threadblock( sweeper, 0, env ), Sweeper_nthread_in_threadblock( sweeper, 1, env ), Sweeper_nthread_in_threadblock( sweeper, 2, env ) )), dim3(Sweeper_shared_size_( sweeper), env ),
+                      Env_hip_stream_kernel_faces( env ) ,
+                      sweeperlite,
+                      vo,
+                      vi,
+                      facexy,
+                      facexz,
+                      faceyz,
+                      a_from_m,
+                      m_from_a,
+                      step,
+                      *quan,
+                      proc_x_min,
+                      proc_x_max,
+                      proc_y_min,
+                      proc_y_max,
+                      stepinfoall,
+                      do_block_init );
 #else
     Sweeper_sweep_block_impl_global
-                            (
-#endif
-                              sweeperlite,
+                            ( sweeperlite,
                               vo,
                               vi,
                               facexy,
@@ -444,6 +452,7 @@ static void Sweeper_sweep_block_adapter(
                               proc_y_max,
                               stepinfoall,
                               do_block_init );
+#endif
     Assert( Env_hip_last_call_succeeded() );
   }
   else
