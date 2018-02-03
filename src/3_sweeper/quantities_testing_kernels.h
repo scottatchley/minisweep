@@ -16,7 +16,7 @@
 #include "array_accessors_kernels.h"
 #include "pointer_kernels.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -448,7 +448,7 @@ TARGET_HD static inline void Quantities_solve(
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

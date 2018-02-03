@@ -12,7 +12,7 @@
 #ifndef _types_kernels_h_
 #define _types_kernels_h_
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -52,7 +52,7 @@ TARGET_HD static inline P P_one()  { return (P)1; }
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

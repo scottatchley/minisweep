@@ -18,7 +18,7 @@
 #include "quantities.h"
 #include "stepscheduler_kba.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -193,7 +193,7 @@ void Faces_recv_faces_end(
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

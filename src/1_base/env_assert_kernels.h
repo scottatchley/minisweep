@@ -14,7 +14,7 @@
 #ifndef __HIP_DEVICE_COMPILE__
 /*---Do the following on the HDST---*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -35,7 +35,7 @@ void insist_( const char *condition_string, const char *file, int line );
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

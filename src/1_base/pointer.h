@@ -17,7 +17,7 @@
 #include "env.h"
 #include "pointer_kernels.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -113,7 +113,7 @@ void Pointer_update_d_stream( Pointer* p, Stream_t stream );
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

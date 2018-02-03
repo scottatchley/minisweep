@@ -18,7 +18,7 @@
 #include "array_operations.h"
 #include "sweeper_simple.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -279,7 +279,7 @@ void Sweeper_sweep(
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

@@ -22,7 +22,7 @@
 #include "types.h"
 #include "env_cuda_kernels.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -134,7 +134,7 @@ void Env_hip_stream_wait( Env* env, Stream_t stream );
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 
