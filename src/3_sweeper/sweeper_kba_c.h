@@ -416,7 +416,13 @@ static void Sweeper_sweep_block_adapter(
 #ifdef USE_HIP
     hipLaunchKernelGGL(
                      (Sweeper_sweep_block_impl_global),
-                      dim3(dim3( Sweeper_nthreadblock( sweeper, 0, env ), Sweeper_nthreadblock( sweeper, 1, env ), Sweeper_nthreadblock( sweeper, 2, env ) ), dim3( Sweeper_nthread_in_threadblock( sweeper, 0, env ), Sweeper_nthread_in_threadblock( sweeper, 1, env ), Sweeper_nthread_in_threadblock( sweeper, 2, env ) )), dim3(Sweeper_shared_size_( sweeper), env ),
+                      dim3( Sweeper_nthreadblock( sweeper, 0, env ),
+                            Sweeper_nthreadblock( sweeper, 1, env ),
+                            Sweeper_nthreadblock( sweeper, 2, env ) ),
+                      dim3( Sweeper_nthread_in_threadblock( sweeper, 0, env ),
+                            Sweeper_nthread_in_threadblock( sweeper, 1, env ),
+                            Sweeper_nthread_in_threadblock( sweeper, 2, env ) ),
+                      Sweeper_shared_size_( sweeper, env ),
                       Env_hip_stream_kernel_faces( env ) ,
                       sweeperlite,
                       vo,
