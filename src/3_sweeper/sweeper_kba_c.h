@@ -23,7 +23,9 @@
 
 #include "sweeper_kba_kernels.h"
 
-#ifdef __cplusplus
+#include <stdio.h>
+
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -411,19 +413,22 @@ static void Sweeper_sweep_block_adapter(
 
   if( Env_hip_is_using_device( env ) )
   {
-    Sweeper_sweep_block_impl_global
-#ifdef USE_CUDA
-                 <<< dim3( Sweeper_nthreadblock( sweeper, 0, env ),
+#ifdef USE_HIP
+    hipLaunchKernelGGL(
+                     Sweeper_sweep_block_impl_global,
+                     dim3( Sweeper_nthreadblock( sweeper, 0, env ),
                            Sweeper_nthreadblock( sweeper, 1, env ),
                            Sweeper_nthreadblock( sweeper, 2, env ) ),
                      dim3( Sweeper_nthread_in_threadblock( sweeper, 0, env ),
                            Sweeper_nthread_in_threadblock( sweeper, 1, env ),
                            Sweeper_nthread_in_threadblock( sweeper, 2, env ) ),
                      Sweeper_shared_size_( sweeper, env ),
-                     Env_cuda_stream_kernel_faces( env )
-                 >>>
+                     Env_hip_stream_kernel_faces( env ),
+#else
+    Sweeper_sweep_block_impl_global
+                            (
 #endif
-                            ( sweeperlite,
+                              sweeperlite,
                               vo,
                               vi,
                               facexy,
@@ -853,7 +858,7 @@ void Sweeper_sweep(
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 
