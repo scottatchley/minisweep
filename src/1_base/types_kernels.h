@@ -23,7 +23,8 @@ extern "C"
 #ifdef USE_HIP
 
 #define TARGET_G  __global__
-#define TARGET_HD __host__ __device__
+//#define TARGET_HD __host__ __device__
+#define TARGET_HD
 
 #else
 
