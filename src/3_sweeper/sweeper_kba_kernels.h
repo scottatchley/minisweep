@@ -74,9 +74,9 @@ enum{ NTHREAD_DEVICE_A = NTHREAD_DEVICE_U * NTHREAD_DEVICE_M };
 
 typedef struct
 {
-  P* __restrict__  vilocal_host_;
-  P* __restrict__  vslocal_host_;
-  P* __restrict__  volocal_host_;
+  P* RESTRICT      vilocal_host_;
+  P* RESTRICT      vslocal_host_;
+  P* RESTRICT      volocal_host_;
 
   Dimensions       dims;
   Dimensions       dims_b;
@@ -289,7 +289,7 @@ TARGET_HD static inline void Sweeper_sync_amu_threads( SweeperLite* sweeper )
 /*===========================================================================*/
 /*---Select which part of v*local to use for current thread/block---*/
 
-TARGET_HD static inline P* __restrict__ Sweeper_vilocal_this_(
+TARGET_HD static inline P* RESTRICT     Sweeper_vilocal_this_(
                                                          SweeperLite* sweeper )
 {
 #ifdef __HIP_PLATFORM_HCC__
@@ -324,7 +324,7 @@ TARGET_HD static inline P* __restrict__ Sweeper_vilocal_this_(
 
 /*---------------------------------------------------------------------------*/
 
-TARGET_HD static inline P* __restrict__ Sweeper_vslocal_this_(
+TARGET_HD static inline P* RESTRICT     Sweeper_vslocal_this_(
                                                          SweeperLite* sweeper )
 {
 #ifdef __HIP_PLATFORM_HCC__
@@ -359,7 +359,7 @@ TARGET_HD static inline P* __restrict__ Sweeper_vslocal_this_(
 
 /*---------------------------------------------------------------------------*/
 
-TARGET_HD static inline P* __restrict__ Sweeper_volocal_this_(
+TARGET_HD static inline P* RESTRICT     Sweeper_volocal_this_(
                                                          SweeperLite* sweeper )
 {
 #ifdef __HIP_PLATFORM_HCC__
@@ -442,13 +442,13 @@ static inline char* Sweeper_task_dependency( SweeperLite* sweeperlite,
 
 TARGET_HD void Sweeper_sweep_block_impl(
   SweeperLite            sweeper,
-  P* __restrict__        vo,
-  const P* __restrict__  vi,
-  P* __restrict__        facexy,
-  P* __restrict__        facexz,
-  P* __restrict__        faceyz,
-  const P* __restrict__  a_from_m,
-  const P* __restrict__  m_from_a,
+  P* RESTRICT            vo,
+  const P* RESTRICT      vi,
+  P* RESTRICT            facexy,
+  P* RESTRICT            facexz,
+  P* RESTRICT            faceyz,
+  const P* RESTRICT      a_from_m,
+  const P* RESTRICT      m_from_a,
   int                    step,
   const Quantities       quan,
   Bool_t                 proc_x_min,
@@ -463,13 +463,13 @@ TARGET_HD void Sweeper_sweep_block_impl(
 
 TARGET_G void Sweeper_sweep_block_impl_global(
   SweeperLite            sweeper,
-        P* __restrict__  vo,
-  const P* __restrict__  vi,
-        P* __restrict__  facexy,
-        P* __restrict__  facexz,
-        P* __restrict__  faceyz,
-  const P* __restrict__  a_from_m,
-  const P* __restrict__  m_from_a,
+        P* RESTRICT      vo,
+  const P* RESTRICT      vi,
+        P* RESTRICT      facexy,
+        P* RESTRICT      facexz,
+        P* RESTRICT      faceyz,
+  const P* RESTRICT      a_from_m,
+  const P* RESTRICT      m_from_a,
   int                    step,
   const Quantities       quan,
   Bool_t                 proc_x_min,

@@ -336,13 +336,13 @@ TARGET_HD static inline P Quantities_init_faceyz(
 
 TARGET_HD static inline void Quantities_solve(
   const Quantities* const  quan,
-  P* const __restrict__ vslocal,
+  P* const RESTRICT     vslocal,
   const int             ia,
   const int             iaind,
   const int             iamax,
-  P* const __restrict__ facexy,
-  P* const __restrict__ facexz,
-  P* const __restrict__ faceyz,
+  P* const RESTRICT     facexy,
+  P* const RESTRICT     facexz,
+  P* const RESTRICT     faceyz,
   const int             ix_b,
   const int             iy_b,
   const int             iz_b,
@@ -410,10 +410,10 @@ TARGET_HD static inline void Quantities_solve(
 #pragma unroll
     for( iu=0; iu<NU; ++iu )
     {
-      P* const __restrict__ vslocal_this
+      P* const RESTRICT     vslocal_this
                         = ref_vslocal( vslocal, dims_b, NU, iamax, iaind, iu );
 /*
-      P* const __restrict__ facexy_this
+      P* const RESTRICT     facexy_this
                         = ref_facexy( facexy, dims_b, NU, noctant_per_block,
                                       ix_b, iy_b, ie, ia, iu, octant_in_block );
 */

@@ -28,18 +28,18 @@ extern "C"
 /*---Perform a sweep for a cell---*/
 
 TARGET_HD static inline void Sweeper_sweep_cell(
-  SweeperLite* __restrict__      sweeper,
-  P* const __restrict__          vo_this,
-  const P* const __restrict__    vi_this,
-  P* const __restrict__          vilocal,
-  P* const __restrict__          vslocal,
-  P* const __restrict__          volocal,
-  P* const __restrict__          facexy,
-  P* const __restrict__          facexz,
-  P* const __restrict__          faceyz,
-  const P* const __restrict__    a_from_m,
-  const P* const __restrict__    m_from_a,
-  const Quantities* __restrict__ quan,
+  SweeperLite* RESTRICT          sweeper,
+  P* const RESTRICT              vo_this,
+  const P* const RESTRICT        vi_this,
+  P* const RESTRICT              vilocal,
+  P* const RESTRICT              vslocal,
+  P* const RESTRICT              volocal,
+  P* const RESTRICT              facexy,
+  P* const RESTRICT              facexz,
+  P* const RESTRICT              faceyz,
+  const P* const RESTRICT        a_from_m,
+  const P* const RESTRICT        m_from_a,
+  const Quantities* RESTRICT     quan,
   const int                      octant,
   const int                      iz_base,
   const int                      octant_in_block,
@@ -558,18 +558,18 @@ TODO: fix vectorization for this loop.
 /*---Perform a sweep for a subblock---*/
 
 TARGET_HD static inline void Sweeper_sweep_subblock(
-  SweeperLite* __restrict__      sweeper,
-  P* const __restrict__          vo_this,
-  const P* const __restrict__    vi_this,
-  P* const __restrict__          vilocal,
-  P* const __restrict__          vslocal,
-  P* const __restrict__          volocal,
-  P* const __restrict__          facexy,
-  P* const __restrict__          facexz,
-  P* const __restrict__          faceyz,
-  const P* const __restrict__    a_from_m,
-  const P* const __restrict__    m_from_a,
-  const Quantities* __restrict__ quan,
+  SweeperLite* RESTRICT          sweeper,
+  P* const RESTRICT              vo_this,
+  const P* const RESTRICT        vi_this,
+  P* const RESTRICT              vilocal,
+  P* const RESTRICT              vslocal,
+  P* const RESTRICT              volocal,
+  P* const RESTRICT              facexy,
+  P* const RESTRICT              facexz,
+  P* const RESTRICT              faceyz,
+  const P* const RESTRICT        a_from_m,
+  const P* const RESTRICT        m_from_a,
+  const Quantities* RESTRICT     quan,
   const int                      octant,
   const int                      iz_base,
   const int                      octant_in_block,
@@ -807,13 +807,13 @@ TARGET_HD static inline void Sweeper_sweep_subblock(
 
 TARGET_HD static inline void Sweeper_sweep_semiblock(
   SweeperLite*           sweeper,
-  P* __restrict__        vo_this,
-  const P* __restrict__  vi_this,
-  P* __restrict__        facexy,
-  P* __restrict__        facexz,
-  P* __restrict__        faceyz,
-  const P* __restrict__  a_from_m,
-  const P* __restrict__  m_from_a,
+  P* RESTRICT            vo_this,
+  const P* RESTRICT      vi_this,
+  P* RESTRICT            facexy,
+  P* RESTRICT            facexz,
+  P* RESTRICT            faceyz,
+  const P* RESTRICT      a_from_m,
+  const P* RESTRICT      m_from_a,
   const Quantities*      quan,
   const StepInfo         stepinfo,
   const int              octant_in_block,
@@ -831,9 +831,9 @@ TARGET_HD static inline void Sweeper_sweep_semiblock(
   const int octant  = stepinfo.octant;
   const int iz_base = stepinfo.block_z * sweeper->dims_b.ncell_z;
 
-  P* __restrict__ vilocal = Sweeper_vilocal_this_( sweeper );
-  P* __restrict__ vslocal = Sweeper_vslocal_this_( sweeper );
-  P* __restrict__ volocal = Sweeper_volocal_this_( sweeper );
+  P* RESTRICT     vilocal = Sweeper_vilocal_this_( sweeper );
+  P* RESTRICT     vslocal = Sweeper_vslocal_this_( sweeper );
+  P* RESTRICT     volocal = Sweeper_volocal_this_( sweeper );
 
   const int dir_x = Dir_x( octant );
   const int dir_y = Dir_y( octant );
@@ -1039,11 +1039,11 @@ TARGET_HD static inline void Sweeper_sweep_semiblock(
 /*---Helper function to calculate semiblock bounds---*/
 
 TARGET_HD static inline void Sweeper_get_semiblock_bounds(
-  Bool_t* __restrict__ has_lo,
-  Bool_t* __restrict__ has_hi,
-  int*    __restrict__ imin,
-  int*    __restrict__ imax,
-  int*    __restrict__ imax_up2,
+  Bool_t* RESTRICT     has_lo,
+  Bool_t* RESTRICT     has_hi,
+  int*    RESTRICT     imin,
+  int*    RESTRICT     imax,
+  int*    RESTRICT     imax_up2,
   int ncell,
   int dim,
   int dir,
@@ -1092,13 +1092,13 @@ TARGET_HD static inline void Sweeper_get_semiblock_bounds(
 
 TARGET_HD void Sweeper_sweep_block_impl(
   SweeperLite            sweeper,
-        P* __restrict__  vo,
-  const P* __restrict__  vi,
-        P* __restrict__  facexy,
-        P* __restrict__  facexz,
-        P* __restrict__  faceyz,
-  const P* __restrict__  a_from_m,
-  const P* __restrict__  m_from_a,
+        P* RESTRICT      vo,
+  const P* RESTRICT      vi,
+        P* RESTRICT      facexy,
+        P* RESTRICT      facexz,
+        P* RESTRICT      faceyz,
+  const P* RESTRICT      a_from_m,
+  const P* RESTRICT      m_from_a,
   int                    step,
   const Quantities       quan,
   Bool_t                 proc_x_min,
@@ -1206,16 +1206,16 @@ TARGET_HD void Sweeper_sweep_block_impl(
       /*---Determine dependencies---*/
       /*--------------------*/
 
-      const char* __restrict__ dep_in_x = Sweeper_task_dependency( &sweeper,
+      const char* RESTRICT     dep_in_x = Sweeper_task_dependency( &sweeper,
                 thread_x-1, thread_y,   thread_z,   thread_e, thread_octant );
 
-      const char* __restrict__ dep_in_y = Sweeper_task_dependency( &sweeper,
+      const char* RESTRICT     dep_in_y = Sweeper_task_dependency( &sweeper,
                 thread_x,   thread_y-1, thread_z,   thread_e, thread_octant );
 
-      const char* __restrict__ dep_in_z = Sweeper_task_dependency( &sweeper,
+      const char* RESTRICT     dep_in_z = Sweeper_task_dependency( &sweeper,
                 thread_x,   thread_y,   thread_z-1, thread_e, thread_octant );
 
-      const char* __restrict__ dep_out = Sweeper_task_dependency( &sweeper,
+      const char* RESTRICT     dep_out = Sweeper_task_dependency( &sweeper,
                 thread_x,   thread_y,   thread_z,   thread_e, thread_octant );
 
       /*
@@ -1360,13 +1360,13 @@ TARGET_HD void Sweeper_sweep_block_impl(
 
 TARGET_G void Sweeper_sweep_block_impl_global(
   SweeperLite            sweeper,
-        P* __restrict__  vo,
-  const P* __restrict__  vi,
-        P* __restrict__  facexy,
-        P* __restrict__  facexz,
-        P* __restrict__  faceyz,
-  const P* __restrict__  a_from_m,
-  const P* __restrict__  m_from_a,
+        P* RESTRICT      vo,
+  const P* RESTRICT      vi,
+        P* RESTRICT      facexy,
+        P* RESTRICT      facexz,
+        P* RESTRICT      faceyz,
+  const P* RESTRICT      a_from_m,
+  const P* RESTRICT      m_from_a,
   int                    step,
   const Quantities       quan,
   Bool_t                 proc_x_min,

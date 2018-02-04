@@ -92,7 +92,7 @@ TARGET_HD static inline size_t ind_state(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline P* ref_state_flat(
-    P* const __restrict__  v,
+    P* const RESTRICT      v,
     const int              dims_ncell_x,
     const int              dims_ncell_y,
     const int              dims_ncell_z,
@@ -124,7 +124,7 @@ TARGET_HD static inline P* ref_state_flat(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline P* ref_state(
-    P* const __restrict__  v,
+    P* const RESTRICT      v,
     const Dimensions       dims,
     const int              nu,
     const int              ix,
@@ -150,7 +150,7 @@ TARGET_HD static inline P* ref_state(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline const P* const_ref_state_flat(
-    const P* const __restrict__  v,
+    const P* const RESTRICT      v,
     const int                    dims_ncell_x,
     const int                    dims_ncell_y,
     const int                    dims_ncell_z,
@@ -182,7 +182,7 @@ TARGET_HD static inline const P* const_ref_state_flat(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline const P* const_ref_state(
-    const P* const __restrict__  v,
+    const P* const RESTRICT      v,
     const Dimensions             dims,
     const int                    nu,
     const int                    ix,
@@ -208,7 +208,7 @@ TARGET_HD static inline const P* const_ref_state(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline P* ref_vilocal(
-    P* const __restrict__  v,
+    P* const RESTRICT      v,
     const Dimensions       dims,
     const int              nu,
     const int              immax,
@@ -229,7 +229,7 @@ TARGET_HD static inline P* ref_vilocal(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline const P* const_ref_vilocal(
-    const P* const __restrict__  v,
+    const P* const RESTRICT      v,
     const Dimensions             dims,
     const int                    nu,
     const int                    immax,
@@ -269,7 +269,7 @@ TARGET_HD static inline int ind_vslocal(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline P* ref_vslocal(
-    P* const __restrict__  v,
+    P* const RESTRICT      v,
     const Dimensions       dims,
     const int              nu,
     const int              iamax,
@@ -290,7 +290,7 @@ TARGET_HD static inline P* ref_vslocal(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline const P* const_ref_vslocal(
-    const P* const __restrict__  v,
+    const P* const RESTRICT      v,
     const Dimensions             dims,
     const int                    nu,
     const int                    iamax,
@@ -311,7 +311,7 @@ TARGET_HD static inline const P* const_ref_vslocal(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline P* ref_volocal(
-    P* const __restrict__  v,
+    P* const RESTRICT      v,
     const Dimensions       dims,
     const int              nu,
     const int              immax,
@@ -332,7 +332,7 @@ TARGET_HD static inline P* ref_volocal(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline P* ref_a_from_m(
-    P* const __restrict__  v,
+    P* const RESTRICT      v,
     const Dimensions       dims,
     const int              im,
     const int              ia,
@@ -353,7 +353,7 @@ TARGET_HD static inline P* ref_a_from_m(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline const P* const_ref_a_from_m(
-    const P* const __restrict__  v,
+    const P* const RESTRICT      v,
     const Dimensions             dims,
     const int                    im,
     const int                    ia,
@@ -373,8 +373,8 @@ TARGET_HD static inline const P* const_ref_a_from_m(
 /*===========================================================================*/
 /*---Multidimensional array accessor function---*/
 
-TARGET_HD static inline const P* __restrict__ const_ref_a_from_m_flat(
-    const P* const __restrict__  v,
+TARGET_HD static inline const P* RESTRICT     const_ref_a_from_m_flat(
+    const P* const RESTRICT      v,
     const int                    dims_nm,
     const int                    dims_na,
     const int                    im,
@@ -396,7 +396,7 @@ TARGET_HD static inline const P* __restrict__ const_ref_a_from_m_flat(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline P* ref_m_from_a(
-    P* const __restrict__  v,
+    P* const RESTRICT      v,
     const Dimensions       dims,
     const int              im,
     const int              ia,
@@ -417,7 +417,7 @@ TARGET_HD static inline P* ref_m_from_a(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline const P* const_ref_m_from_a(
-    const P* const __restrict__  v,
+    const P* const RESTRICT      v,
     const Dimensions             dims,
     const int                    im,
     const int                    ia,
@@ -458,7 +458,7 @@ TARGET_HD static inline int ind_m_from_a_flat(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline P* ref_facexy(
-    P* const __restrict__  v,
+    P* const RESTRICT      v,
     const Dimensions       dims,
     const int              nu,
     const int              noctant_per_block,
@@ -490,7 +490,7 @@ TARGET_HD static inline P* ref_facexy(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline const P* const_ref_facexy(
-    const P* const __restrict__  v,
+    const P* const RESTRICT      v,
     const Dimensions             dims,
     const int                    nu,
     const int                    noctant_per_block,
@@ -522,7 +522,7 @@ TARGET_HD static inline const P* const_ref_facexy(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline P* ref_facexz(
-    P* const __restrict__  v,
+    P* const RESTRICT      v,
     const Dimensions       dims,
     const int              nu,
     const int              noctant_per_block,
@@ -554,7 +554,7 @@ TARGET_HD static inline P* ref_facexz(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline const P* const_ref_facexz(
-    const P* const __restrict__  v,
+    const P* const RESTRICT      v,
     const Dimensions             dims,
     const int                    nu,
     const int                    noctant_per_block,
@@ -586,7 +586,7 @@ TARGET_HD static inline const P* const_ref_facexz(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline P* ref_faceyz(
-    P* const __restrict__ v,
+    P* const RESTRICT     v,
     const Dimensions      dims,
     const int             nu,
     const int             noctant_per_block,
@@ -618,7 +618,7 @@ TARGET_HD static inline P* ref_faceyz(
 /*---Multidimensional array accessor function---*/
 
 TARGET_HD static inline const P* const_ref_faceyz(
-    const P* const __restrict__  v,
+    const P* const RESTRICT      v,
     const Dimensions             dims,
     const int                    nu,
     const int                    noctant_per_block,

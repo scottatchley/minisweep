@@ -33,9 +33,9 @@ extern "C"
 
 typedef struct
 {
-  P* __restrict__  vilocal_host_;
-  P* __restrict__  vslocal_host_;
-  P* __restrict__  volocal_host_;
+  P* RESTRICT      vilocal_host_;
+  P* RESTRICT      vslocal_host_;
+  P* RESTRICT      volocal_host_;
 
   Dimensions       dims;
   Dimensions       dims_b;

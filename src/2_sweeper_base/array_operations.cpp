@@ -23,7 +23,7 @@ extern "C"
 /*===========================================================================*/
 /*---Initialize state vector to required input value---*/
 
-void initialize_state( P* const __restrict__   v,
+void initialize_state( P* const RESTRICT       v,
                        const Dimensions        dims,
                        const int               nu,
                        const Quantities* const quan )
@@ -50,7 +50,7 @@ void initialize_state( P* const __restrict__   v,
 /*===========================================================================*/
 /*---Initialize state vector to zero---*/
 
-void initialize_state_zero( P* const __restrict__ v,
+void initialize_state_zero( P* const RESTRICT     v,
                             const Dimensions      dims,
                             const int             nu )
 {
@@ -66,12 +66,12 @@ void initialize_state_zero( P* const __restrict__ v,
 /*===========================================================================*/
 /*---Compute vector norm info for state vector---*/
 
-void get_state_norms( const P* const __restrict__ vi,
-                      const P* const __restrict__ vo,
+void get_state_norms( const P* const RESTRICT     vi,
+                      const P* const RESTRICT     vo,
                       const Dimensions            dims,
                       const int                   nu,
-                      P* const __restrict__       normsqp,
-                      P* const __restrict__       normsqdiffp,
+                      P* const RESTRICT           normsqp,
+                      P* const RESTRICT           normsqdiffp,
                       Env* const                  env )
 {
   Assert( normsqp     != NULL ? "Null pointer encountered" : 0 );
@@ -112,8 +112,8 @@ void get_state_norms( const P* const __restrict__ vi,
 /*===========================================================================*/
 /*---Copy vector---*/
 
-void copy_vector(       P* const __restrict__ vo,
-                  const P* const __restrict__ vi,
+void copy_vector(       P* const RESTRICT     vo,
+                  const P* const RESTRICT     vi,
                   const size_t                n )
 {
   Assert( n+1 >= 1 );

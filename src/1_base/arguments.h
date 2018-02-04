@@ -21,6 +21,8 @@ Its entries are "read-once": when an entry is read, it is deleted.
 #ifndef _arguments_h_
 #define _arguments_h_
 
+#define RESTRICT
+
 #include <stddef.h>
 
 #include "types.h"
