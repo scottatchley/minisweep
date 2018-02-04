@@ -437,7 +437,7 @@ static void Sweeper_sweep_block_adapter(
 		       proc_x_max,
 		       proc_y_min,
 		       proc_y_max,
-		       stepinfoall,
+		       // stepinfoall,
 		       do_block_init );
 #else
     Sweeper_sweep_block_impl_global

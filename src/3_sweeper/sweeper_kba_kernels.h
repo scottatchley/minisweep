@@ -476,7 +476,7 @@ TARGET_G void Sweeper_sweep_block_impl_global(
   Bool_t                 proc_x_max,
   Bool_t                 proc_y_min,
   Bool_t                 proc_y_max,
-  StepInfoAll            stepinfoall,
+  // StepInfoAll            stepinfoall,
   unsigned long int      do_block_init );
 
 /*===========================================================================*/
