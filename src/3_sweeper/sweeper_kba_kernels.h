@@ -18,7 +18,7 @@
 #include "pointer_kernels.h"
 #include "quantities_kernels.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -481,7 +481,7 @@ TARGET_G void Sweeper_sweep_block_impl_global(
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

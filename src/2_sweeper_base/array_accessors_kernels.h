@@ -19,7 +19,7 @@
 #include "definitions_kernels.h"
 #include "dimensions_kernels.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -648,7 +648,7 @@ TARGET_HD static inline const P* const_ref_faceyz(
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

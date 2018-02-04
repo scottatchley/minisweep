@@ -18,7 +18,7 @@
 #include "types_kernels.h"
 #include "env_assert_kernels.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -58,7 +58,7 @@ TARGET_HD static inline Bool_t Env_omp_in_parallel()
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

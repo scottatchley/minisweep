@@ -16,7 +16,7 @@
 #include "types_kernels.h"
 #include "env_assert_kernels.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -81,7 +81,7 @@ TARGET_HD static inline const P* __restrict__ Pointer_const_d( const Pointer* p 
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

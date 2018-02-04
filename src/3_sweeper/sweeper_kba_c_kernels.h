@@ -19,7 +19,7 @@
 #include "stepscheduler_kba_kernels.h"
 #include "sweeper_kba_kernels.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -1384,7 +1384,7 @@ TARGET_G void Sweeper_sweep_block_impl_global(
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

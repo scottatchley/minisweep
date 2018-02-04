@@ -21,7 +21,7 @@
 #include "arguments.h"
 #include "env_assert.h"
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -167,7 +167,7 @@ void Env_wait( Env* env, Request_t* request );
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 

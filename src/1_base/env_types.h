@@ -26,7 +26,7 @@ since these are tightly coupled to the data structure.
 #include "cuda.h"
 #endif
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 extern "C"
 {
 #endif
@@ -70,7 +70,7 @@ typedef struct
 
 /*===========================================================================*/
 
-#ifdef __cplusplus
+#ifdef __cplusplus_IGNORE
 } /*---extern "C"---*/
 #endif
 
