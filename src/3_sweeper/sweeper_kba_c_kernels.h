@@ -1373,10 +1373,10 @@ TARGET_G void Sweeper_sweep_block_impl_global(
   Bool_t                 proc_x_max,
   Bool_t                 proc_y_min,
   Bool_t                 proc_y_max,
-  // StepInfoAll            stepinfoall,
+  const StepInfoAll*     stepinfoall_p,
   unsigned long int      do_block_init )
 {
-    StepInfoAll            stepinfoall;
+    const StepInfoAll& stepinfoall(*stepinfoall_p);
     Sweeper_sweep_block_impl( sweeper, vo, vi, facexy, facexz, faceyz,
                               a_from_m, m_from_a, step, quan,
                               proc_x_min, proc_x_max, proc_y_min, proc_y_max,

@@ -414,6 +414,16 @@ static void Sweeper_sweep_block_adapter(
   if( Env_hip_is_using_device( env ) )
   {
 #ifdef USE_HIP
+    // workaround for not being able to pass StepInfoAll object as kernel argument:
+    // allocate memory for a StepInfoAll on the device, and copy from the host.
+    // This initial solution uses hipMalloc/hipFree and hipMemcyp; proper implementation
+    // should use higher level allocation/deallocation/copy functions defined elsewhere
+    // in the code.
+    
+    StepInfoAll* stepinfoall_p;
+    auto errorAlloc = hipMalloc(&stepinfoall_p, sizeof(StepInfoAll));
+    auto errorCpyHD = hipMemcpy(stepinfoall_p, &stepinfoall, sizeof(StepInfoAll), hipMemcpyHostToDevice);
+    // end of workaround, modulo deallocation after the kernel invocation
     hipLaunchKernelGGL(
                      (Sweeper_sweep_block_impl_global),
                       dim3( Sweeper_nthreadblock( sweeper, 0, env ),
@@ -438,7 +448,7 @@ static void Sweeper_sweep_block_adapter(
                       proc_x_max,
                       proc_y_min,
                       proc_y_max,
-		      // stepinfoall,
+		      stepinfoall_p,
                       do_block_init );
 #else
     Sweeper_sweep_block_impl_global
@@ -460,6 +470,10 @@ static void Sweeper_sweep_block_adapter(
                               do_block_init );
 #endif
     Assert( Env_hip_last_call_succeeded() );
+#ifdef USE_HIP
+    // cleanup for workaround near the top of this function
+    auto errorFree = hipFree(stepinfoall_p);
+#endif
   }
   else
   {
