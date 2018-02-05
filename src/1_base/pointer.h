@@ -30,7 +30,7 @@ Pointer Pointer_null(void);
 /*===========================================================================*/
 /*---Conditional host or device pointer---*/
 
-static P* __restrict__ Pointer_active( Pointer* p )
+static P* RESTRICT     Pointer_active( Pointer* p )
 {
   Assert( p );
   return p->is_using_device_ ? p->d_ : p->h_;
@@ -39,7 +39,7 @@ static P* __restrict__ Pointer_active( Pointer* p )
 /*===========================================================================*/
 /*---Conditional host or device pointer---*/
 
-static P* __restrict__ Pointer_const_active( const Pointer* p )
+static P* RESTRICT     Pointer_const_active( const Pointer* p )
 {
   Assert( p );
   return p->is_using_device_ ? p->d_ : p->h_;

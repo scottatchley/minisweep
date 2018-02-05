@@ -33,8 +33,8 @@ enum{ IS_PINNED = Bool_true, IS_NOT_PINNED = Bool_false };
 typedef struct
 {
   size_t          n_;
-  P* __restrict__ h_;
-  P* __restrict__ d_;
+  P* RESTRICT     h_;
+  P* RESTRICT     d_;
   Bool_t          is_using_device_;
   Bool_t          is_pinned_;
   Bool_t          is_alias_;
@@ -43,7 +43,7 @@ typedef struct
 /*===========================================================================*/
 /*---Accessors---*/
 
-TARGET_HD static inline P* __restrict__ Pointer_h( Pointer* p )
+TARGET_HD static inline P* RESTRICT     Pointer_h( Pointer* p )
 {
   Assert( p );
   Assert( p->h_ );
@@ -52,7 +52,7 @@ TARGET_HD static inline P* __restrict__ Pointer_h( Pointer* p )
 
 /*---------------------------------------------------------------------------*/
 
-TARGET_HD static inline const P* __restrict__ Pointer_const_h( const Pointer* p )
+TARGET_HD static inline const P* RESTRICT     Pointer_const_h( const Pointer* p )
 {
   Assert( p );
   Assert( p->h_ );
@@ -61,7 +61,7 @@ TARGET_HD static inline const P* __restrict__ Pointer_const_h( const Pointer* p 
 
 /*---------------------------------------------------------------------------*/
 
-TARGET_HD static inline P* __restrict__ Pointer_d( Pointer* p )
+TARGET_HD static inline P* RESTRICT     Pointer_d( Pointer* p )
 {
   Assert( p );
   Assert( p->d_ );
@@ -71,7 +71,7 @@ TARGET_HD static inline P* __restrict__ Pointer_d( Pointer* p )
 
 /*---------------------------------------------------------------------------*/
 
-TARGET_HD static inline const P* __restrict__ Pointer_const_d( const Pointer* p )
+TARGET_HD static inline const P* RESTRICT     Pointer_const_d( const Pointer* p )
 {
   Assert( p );
   Assert( p->d_ );

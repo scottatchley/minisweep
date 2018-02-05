@@ -102,8 +102,8 @@ void Faces_communicate_faces(
 
   /*---Allocate temporary face buffers---*/
 
-  P* __restrict__ buf_xz  = malloc_host_P( size_facexz_per_octant );
-  P* __restrict__ buf_yz  = malloc_host_P( size_faceyz_per_octant );
+  P* RESTRICT     buf_xz  = malloc_host_P( size_facexz_per_octant );
+  P* RESTRICT     buf_yz  = malloc_host_P( size_faceyz_per_octant );
 
   /*---Loop over octants---*/
 
@@ -125,9 +125,9 @@ void Faces_communicate_faces(
 
       const size_t    size_face_per_octant    = axis_x ? size_faceyz_per_octant
                                                        : size_facexz_per_octant;
-      P* __restrict__ buf                     = axis_x ? buf_yz
+      P* RESTRICT     buf                     = axis_x ? buf_yz
                                                        : buf_xz;
-      P* __restrict__ face_per_octant = axis_x ?
+      P* RESTRICT     face_per_octant = axis_x ?
         ref_faceyz( Pointer_h( Faces_faceyz_step( faces, step ) ),
                     dims_b, NU, faces->noctant_per_block,
                     0, 0, 0, 0, 0, octant_in_block ) :
@@ -260,7 +260,7 @@ void Faces_send_faces_start(
 
       const size_t    size_face_per_octant    = axis_x ? size_faceyz_per_octant
                                                        : size_facexz_per_octant;
-      P* __restrict__ face_per_octant = axis_x ?
+      P* RESTRICT     face_per_octant = axis_x ?
         ref_faceyz( Pointer_h( Faces_faceyz_step( faces, step ) ),
                     dims_b, NU, faces->noctant_per_block,
                     0, 0, 0, 0, 0, octant_in_block ) :
@@ -387,7 +387,7 @@ void Faces_recv_faces_start(
 
       const size_t    size_face_per_octant    = axis_x ? size_faceyz_per_octant
                                                        : size_facexz_per_octant;
-      P* __restrict__ face_per_octant = axis_x ?
+      P* RESTRICT     face_per_octant = axis_x ?
         ref_faceyz( Pointer_h( Faces_faceyz_step( faces, step+1 ) ),
                     dims_b, NU, faces->noctant_per_block,
                     0, 0, 0, 0, 0, octant_in_block ) :

@@ -34,14 +34,10 @@ enum{ VEC_LEN = 32 };
 /*===========================================================================*/
 /*---Pointer to device shared memory---*/
 
-#ifdef __HIP_DEVICE_COMPILE__
-//__shared__ extern char cuda_shared_memory[];
-HIP_DYNAMIC_SHARED(char, cuda_shared_memory);
-#endif
-
 TARGET_HD static char* Env_hip_shared_memory()
 {
 #ifdef __HIP_DEVICE_COMPILE__
+  HIP_DYNAMIC_SHARED(char, cuda_shared_memory);
   return cuda_shared_memory;
 #else
   return (char*)0;

@@ -27,10 +27,10 @@ extern "C"
 
 typedef struct
 {
-  P* __restrict__  facexy;
-  P* __restrict__  facexz;
-  P* __restrict__  faceyz;
-  P* __restrict__  vslocal;
+  P* RESTRICT      facexy;
+  P* RESTRICT      facexz;
+  P* RESTRICT      faceyz;
+  P* RESTRICT      vslocal;
 
   Dimensions       dims;
 } Sweeper;
